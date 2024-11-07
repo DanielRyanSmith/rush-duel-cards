@@ -1,0 +1,4 @@
+all_cards.json
+db.sqlite3
+cardsearch/migrations
+*/__pycache__/*

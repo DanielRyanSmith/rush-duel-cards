@@ -30,7 +30,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# python -m venv rdc-env; source rdc-env/bin/activate; pip install -r requirements.txt
 INSTALLED_APPS = [
+    "bootstrap5",
     "cardsearch.apps.CardsearchConfig",
     "django_extensions",
     "django.contrib.admin",

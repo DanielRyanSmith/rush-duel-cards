@@ -1,0 +1,7 @@
+sqlparse
+soupsieve
+asgiref
+django
+beautifulsoup4
+django-extensions
+django-bootstrap-v5

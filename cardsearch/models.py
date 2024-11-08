@@ -21,10 +21,10 @@ class Card(models.Model):
 
     def __str__(self):
         str_parts = [
-            f"Name:        {self.name}"
-            f"Type:        {self.card_type}"
-            f"Property:    {self.card_property}"
-            f"Status:      {self.status}"
+            f"Name:        {self.name}",
+            f"Type:        {self.card_type}",
+            f"Property:    {self.card_property}",
+            f"Status:      {self.status}",
         ]
         if self.monster_attribute is not None:
             str_parts.append(f"Attribute:   {self.monster_attribute}")
@@ -34,17 +34,20 @@ class Card(models.Model):
         if self.effect is None:
             str_parts.append(f"Text:\n{self.text}")
         else:
-            str_parts.append(f"""Text:
-{self.additional_text}
-[REQUIREMENT]
+            str_parts.append("Text:")
+            if self.additional_text is not None:
+                str_parts.append(self.additional_text)
+            str_parts.append(f"""[REQUIREMENT]
     {self.requirement}
 [{self.effect_type}]
     {self.effect}""")
         
         return "\n".join(str_parts)
 
+
 class MonsterType(models.Model):
-    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    card = models.ForeignKey(
+        'Card', related_name='monster_types', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
     def __str__(self):

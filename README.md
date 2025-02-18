@@ -12,6 +12,11 @@ python manage.py makemigrations cardsearch; python manage.py migrate --run-syncd
 
 Populate DB:
 ```sh
+# If cards have been previously imported
+python manage.py flush
+```
+
+```sh
 python manage.py runscript add_cards
 ```
 

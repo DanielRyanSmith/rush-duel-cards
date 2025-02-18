@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
+</head>
+
+<body>
+    <div class="text-center">
+        <h1>Advanced Search</h1>
+        <form method="POST" action="/search">
+            {% csrf_token %}
+            <div>
+                <label>Name contains
+                    <input type="text" name="name">
+                </label>
+            </div>
+            <div>
+                <label>Card Type
+                    <select name="card-type" id="card-type">
+                        <option selected value> -- Any -- </option>
+                        <option value="Monster">Monster</option>
+                        <option value="Spell">Spell</option>
+                        <option value="Trap">Trap</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>Card status
+                    <select name="card-status" id="card-status">
+                        <option selected value> -- Any -- </option>
+                        <option value="Legend">Legend</option>
+                        <option value="Limited">Limited</option>
+                        <option value="Semi-Limited">Semi-Limited</option>
+                        <option value="Unlimited">Unlimited</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>Card text contains
+                    <textarea name="card-text" id="card-text"></textarea>
+                </label>
+            </div>
+            <div>
+                <label>Requirement text contains
+                    <input name="requirement" id="requirement">
+                </label>
+            </div>
+            <div>
+                <label>Effect text contains
+                    <input name="effect" id="effect">
+                </label>
+            </div>
+            <section>
+                <div>
+                    <h3>Monster options</h3>
+                </div>
+                <div>
+                    <label>Level
+                        <select name="level" id="level">
+                            <option selected value> -- Any -- </option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    <label>Attribute
+                        <select name="attribute" id="attribute">
+                            <option selected value> -- Any -- </option>
+                            <option value="DARK">DARK</option>
+                            <option value="EARTH">EARTH</option>
+                            <option value="FIRE">FIRE</option>
+                            <option value="LIGHT">LIGHT</option>
+                            <option value="WATER">WATER</option>
+                            <option value="WIND">WIND</option>
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    <label>Attack
+                        <input type="number" name="attack" />
+                    </label>
+                </div>
+                <div>
+                    <label>Defense</label>
+                    <input type="number" name="defense" />
+                </div>
+                <div>
+                    <label>Monster types (comma-separated)
+                        <input type="text" name="monster-types" />
+                    </label>
+                </div>
+            </section>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</body>
+
+</html>

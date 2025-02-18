@@ -80,7 +80,7 @@ def parse_cards(card_urls):
 
 def parse_card(card_url):
     soup = create_parser(card_url)
-    info = {}
+    info = {"url": card_url}
     try:
         info["card_type"] = soup.find(
             "a", {"title": "Card type"}
@@ -153,6 +153,7 @@ def parse_card(card_url):
             info["card_effect"] = card_effect.strip()
     except Exception as e:
         print("FAILED (", e, ")", card_url)
+        failed_cards.append(card_url)
         return None
     return info
 

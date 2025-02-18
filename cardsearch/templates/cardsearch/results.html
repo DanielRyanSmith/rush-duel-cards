@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,6 +6,7 @@
   {% load bootstrap5 %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
+  <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
 </head>
 <body>
 {% if cards_info %}
@@ -12,10 +14,10 @@
     <div class="row">
         <div class="col-3"></div>
         <div class="col-3">
-            <img src="{{card_info.card.image_url}}" />
+            <img style="height: 438px; width: 300px;"src="{{card_info.card.image_url}}" />
         </div>
         <div class="col-4">
-            <h3>{{card_info.card.name}}</h4>
+            <a href="{{card_info.card.url}}" target="_blank"><h3>{{card_info.card.name}}</h3></a>
             <p>Type: {{card_info.card.card_type}}</p>
         {% if card_info.card.card_property %}<p>Property: {{card_info.card.card_property}}</p>{% endif %}
             <p>Status: {{card_info.card.status}}</p>
@@ -39,6 +41,10 @@
         <div class="col-2"></div>
     </div>
     {% endfor %}
+{% else %}
+    <div class="row">
+        <h1>No results found</h1>
+    </div>
 {% endif %}
 </body>
 </html>

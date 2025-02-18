@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
+</head>
+
+<body>
+    <h1 class="homepage-title">Rush Duel Card Search</h1>
+    <form method="POST" action="/search">
+        {% csrf_token %}
+        <label>Name Search
+            <input type="text" name="name" required>
+        </label>
+        <button type="submit">Search</button>
+    </form>
+    <a href="/advanced"><button>Advanced Search</button></a>
+</body>
+
+</html>

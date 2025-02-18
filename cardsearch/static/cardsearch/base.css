@@ -1,0 +1,10 @@
+body {
+    background: linear-gradient(to bottom, #1d1c25, #431e3f);
+    min-height: 100vh;
+    color: white;
+}
+
+body p {
+    color: white;
+}
+

@@ -17,6 +17,7 @@ def run():
                        if 'monster_level' in card_info else None)
             card = Card(
                 name=card_info['card_name'],
+                url=card_info['url'],
                 card_type=card_info['card_type'],
                 card_property=card_info.get('card_property'),
                 status=card_info['card_status'],
@@ -36,5 +37,5 @@ def run():
             card.save()
             if 'monster_types' in card_info:
                 for monster_type in card_info['monster_types']:
-                    card.monstertype_set.create(name=monster_type)
+                    card.monster_types.create(name=monster_type)
             card.save()

@@ -3,6 +3,7 @@ from django.db import models
 
 class Card(models.Model):
     name = models.CharField(max_length=200)
+    url = models.CharField(max_length=500, null=True)
     card_type = models.CharField(max_length=200)
     card_property = models.CharField(max_length=50, null=True)
     japanese_name = models.CharField(max_length=200)

@@ -1,10 +1,9 @@
+from django.shortcuts import render
 from functools import reduce
 from operator import and_
 
-from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render
-
 
 from cardsearch.models import Card
 
@@ -87,17 +86,7 @@ def search(request):
     # Apply sorting to the filtered queryset
     sorted_cards = filtered_cards.order_by(sort_by)
 
-    # Create a Paginator object
-    paginator = Paginator(all_cards, 25) # 25 cards per page
-
-    # Get the current page number from the URL's 'page' parameter
-    page_number = request.GET.get('page')
-
-    # Get the Page object for the requested page number
-    page_obj = paginator.get_page(page_number)
-
     context = {
-        'page_obj': page_obj,
         "cards": sorted_cards,
         "current_sort": sort_by,
         "sort_options": {

@@ -50,6 +50,7 @@
             </div>
         </div>
         <div class="col-12"><hr style="border-color: var(--border-color);"></div>
+        <div id="pagination-top" class="pagination-controls"></div>
     </div>
 
     {% if cards %}
@@ -127,49 +128,100 @@
             <a href="/advanced" class="btn btn-new-search mt-3">New Search</a>
         </div>
     {% endif %}
+    <div id="pagination-bottom" class="pagination-controls"></div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const resultsContainer = document.querySelector('#results-list-container');
+    const cardElements = Array.from(resultsContainer.querySelectorAll('.result-card'));
     const sortLinks = document.querySelectorAll('.sort-link');
-    const resultsContainer = document.querySelector('#results-list-container'); // You'll need to add this ID
+    const paginationTop = document.getElementById('pagination-top');
+    const paginationBottom = document.getElementById('pagination-bottom');
 
+    let currentPage = 1;
+    const rowsPerPage = 25;
+
+    // --- PAGINATION LOGIC ---
+    function displayPage(page) {
+        currentPage = page;
+        const start = rowsPerPage * (page - 1);
+        const end = start + rowsPerPage;
+
+        // Hide all cards, then show only the ones for the current page
+        cardElements.forEach((card, index) => {
+            card.style.display = (index >= start && index < end) ? '' : 'none';
+        });
+
+        updatePaginationControls();
+    }
+
+    function setupPaginationControls() {
+        const pageCount = Math.ceil(cardElements.length / rowsPerPage);
+        // Clear previous controls
+        paginationTop.innerHTML = '';
+        paginationBottom.innerHTML = '';
+        
+        if (pageCount <= 1) return; // Don't show controls if there's only one page
+
+        for (let i = 1; i <= pageCount; i++) {
+            const btn = createPageButton(i);
+            const btn2 = createPageButton(i); // Create a second button for the bottom
+            paginationTop.appendChild(btn);
+            paginationBottom.appendChild(btn2);
+        }
+    }
+    
+    function createPageButton(page) {
+        const button = document.createElement('button');
+        button.innerText = page;
+        button.classList.add('page-btn');
+        if (page === currentPage) {
+            button.classList.add('active');
+        }
+        button.addEventListener('click', function() {
+            displayPage(page);
+        });
+        return button;
+    }
+    
+    function updatePaginationControls() {
+        // Just recreate them to easily handle active state
+        setupPaginationControls();
+    }
+
+    // --- SORTING LOGIC ---
     sortLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault(); // Prevent the link from navigating
-
+            e.preventDefault();
             const sortKey = this.dataset.sortKey;
             const sortDir = this.dataset.sortDir;
             
-            // Get all the card elements from the page
-            const cards = Array.from(resultsContainer.querySelectorAll('.result-card'));
-
-            // Sort the array of card elements
-            cards.sort((a, b) => {
+            cardElements.sort((a, b) => {
                 const valA = a.dataset[sortKey];
                 const valB = b.dataset[sortKey];
-
-                const isNumeric = !isNaN(parseFloat(valA)) && isFinite(valA);
-                let comparison = 0;
-
-                if (isNumeric) {
-                    comparison = parseFloat(valA) - parseFloat(valB);
-                } else {
-                    comparison = valA.localeCompare(valB);
-                }
-                
-                // Reverse the comparison for descending order
+                const isNumeric = !isNaN(parseFloat(valA));
+                let comparison = isNumeric ? parseFloat(valA) - parseFloat(valB) : valA.localeCompare(valB);
                 return sortDir === 'asc' ? comparison : -comparison;
             });
 
-            // Re-append the sorted cards to the container
-            cards.forEach(card => resultsContainer.appendChild(card));
+            // Re-append ALL sorted cards to the container (maintains new order)
+            cardElements.forEach(card => resultsContainer.appendChild(card));
+            
+            // After sorting, always go back to page 1
+            displayPage(1);
 
-            // Optional: Update UI to show active sort
+            // Update UI
             sortLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
     });
+
+    // --- INITIAL SETUP ---
+    if (cardElements.length > 0) {
+        setupPaginationControls();
+        displayPage(currentPage);
+    }
 });
 </script>
 

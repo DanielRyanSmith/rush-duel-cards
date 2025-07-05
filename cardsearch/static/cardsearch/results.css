@@ -135,38 +135,40 @@
 
 .pagination-controls {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     padding: 1rem 0;
+    gap: 0.5rem;
 }
 
-.page-info {
-    color: var(--text-muted-color);
-    font-weight: 500;
-}
-
-.pagination-link {
+.page-btn {
     background-color: var(--card-bg-color);
     color: var(--text-muted-color);
     border: 1px solid var(--border-color);
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.pagination-link:hover {
+.page-btn:hover {
     background-color: var(--card-header-bg);
     color: white;
-    box-shadow: 0 0 10px var(--shadow-color);
 }
 
-.pagination-link.disabled {
+.page-btn.active {
+    background-color: var(--accent-color-end);
+    color: white;
+    box-shadow: 0 0 10px var(--shadow-color);
+    border-color: var(--accent-color-end);
+}
+
+.page-btn.disabled {
     background-color: transparent;
     border-color: var(--input-border-color, #2c5364);
-    color: var(--text-muted-color);
     opacity: 0.6;
-    pointer-events: none; /* Makes the link unclickable */
+    pointer-events: none;
 }

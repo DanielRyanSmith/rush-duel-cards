@@ -11,12 +11,12 @@
     {% bootstrap_javascript %}
     
     <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
-    <link rel="stylesheet" href="{% static 'cardsearch/header.css' %}">
+    <link rel="stylesheet" href="{% static 'cardsearch/results.css' %}">
     <link rel="icon" type="image/svg+xml" href="{% static 'cardsearch/images/star.svg' %}" />
 </head>
 <body>
 
-<div class="container mt-4 mb-5">
+<div class="container mt-4 mb-5 " id="results-list-container">
     
     <header class="results-header mb-5">
         <form class="header-search-form" method="POST" action="/search">
@@ -27,16 +27,39 @@
         <a href="/advanced" class="header-advanced-link">Advanced Search</a>
     </header>
 
-    <div class="row mb-4">
+    <div class="row mb-4 align-items-center">
         <div class="col">
             <h2 class="page-title">Search Results</h2>
-            <hr style="border-color: var(--border-color);">
         </div>
+        
+        <div class="col-auto">
+            <div class="dropdown sorting-controls">
+                <button class="btn btn-sort dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort By
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item sort-link" href="#" data-sort-key="name" data-sort-dir="asc">Name (A-Z)</a></li>
+                    <li><a class="dropdown-item sort-link" href="#" data-sort-key="name" data-sort-dir="desc">Name (Z-A)</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item sort-link" href="#" data-sort-key="level" data-sort-dir="desc">Level (High-Low)</a></li>
+                    <li><a class="dropdown-item sort-link" href="#" data-sort-key="level" data-sort-dir="asc">Level (Low-High)</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item sort-link" href="#" data-sort-key="attack" data-sort-dir="desc">Attack (High-Low)</a></li>
+                    <li><a class="dropdown-item sort-link" href="#" data-sort-key="defense" data-sort-dir="desc">Defense (High-Low)</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-12"><hr style="border-color: var(--border-color);"></div>
     </div>
 
-    {% if cards_info %}
-        {% for card in cards_info %}
-        <div class="result-card mb-4">
+    {% if cards %}
+        {% for card in cards|dictsort:current_sort %}
+        <div class="result-card mb-4" 
+            data-name="{{ card.name }}"
+            data-type="{{ card.card_type }}"
+            data-level="{{ card.monster_level|default:'0' }}"
+            data-attack="{{ card.monster_attack|default:'-1' }}"
+            data-defense="{{ card.monster_defense|default:'-1' }}">
             <div class="row g-0">
                 <div class="col-lg-3 card-img-container">
                     <a href="{{card.url}}" target="_blank">
@@ -105,6 +128,50 @@
         </div>
     {% endif %}
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sortLinks = document.querySelectorAll('.sort-link');
+    const resultsContainer = document.querySelector('#results-list-container'); // You'll need to add this ID
+
+    sortLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the link from navigating
+
+            const sortKey = this.dataset.sortKey;
+            const sortDir = this.dataset.sortDir;
+            
+            // Get all the card elements from the page
+            const cards = Array.from(resultsContainer.querySelectorAll('.result-card'));
+
+            // Sort the array of card elements
+            cards.sort((a, b) => {
+                const valA = a.dataset[sortKey];
+                const valB = b.dataset[sortKey];
+
+                const isNumeric = !isNaN(parseFloat(valA)) && isFinite(valA);
+                let comparison = 0;
+
+                if (isNumeric) {
+                    comparison = parseFloat(valA) - parseFloat(valB);
+                } else {
+                    comparison = valA.localeCompare(valB);
+                }
+                
+                // Reverse the comparison for descending order
+                return sortDir === 'asc' ? comparison : -comparison;
+            });
+
+            // Re-append the sorted cards to the container
+            cards.forEach(card => resultsContainer.appendChild(card));
+
+            // Optional: Update UI to show active sort
+            sortLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+});
+</script>
 
 </body>
 </html>

@@ -1,0 +1,172 @@
+/* static/cardsearch/results.css */
+
+.results-header {
+    background-color: var(--card-bg-color);
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* --- Header Search Form --- */
+.header-search-form {
+    display: flex;
+    flex-grow: 1;
+    max-width: 500px;
+    border-radius: 50px;
+    background-color: var(--input-bg-color, rgba(0, 0, 0, 0.3));
+    border: 1px solid var(--input-border-color, #2c5364);
+    transition: all 0.3s ease;
+}
+
+.header-search-form:focus-within {
+    border-color: var(--input-focus-border-color, var(--border-color));
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.header-search-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    color: white;
+    outline: none;
+}
+
+.header-search-input::placeholder {
+    color: var(--text-muted-color);
+    opacity: 0.8;
+}
+
+.header-search-button {
+    border: none;
+    background: linear-gradient(45deg, var(--accent-color-start), var(--accent-color-end));
+    color: white;
+    padding: 0 2rem;
+    font-weight: bold;
+    border-radius: 0 50px 50px 0;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+@media only screen and (max-width: 768px) {
+    .results-header {
+        padding: 1.5rem 1rem;
+    } 
+}
+
+.header-search-button:hover {
+    opacity: 0.9;
+}
+
+/* --- Header Advanced Search Link --- */
+.header-advanced-link {
+    color: var(--text-muted-color);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Prevents the link from wrapping */
+}
+
+.header-advanced-link:hover {
+    color: white;
+    border-bottom-color: var(--accent-color-end);
+}
+
+
+.sorting-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: -2.5rem; /* Pulls it up into the space below the title */
+    position: relative;
+    z-index: 10;
+}
+
+.sort-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sort-link .sort-icon {
+    font-size: 1.2em;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.sort-link.active .sort-icon {
+    opacity: 1;
+}
+
+.dropdown-menu {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+}
+
+.dropdown-item {
+    color: var(--text-muted-color);
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: var(--card-header-bg);
+    color: white;
+}
+
+.btn-sort {
+    background-color: var(--card-bg-color);
+    color: var(--text-muted-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-sort:hover, .btn-sort:focus {
+    background-color: var(--card-header-bg);
+    color: white;
+    border-color: var(--accent-color-end);
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.page-info {
+    color: var(--text-muted-color);
+    font-weight: 500;
+}
+
+.pagination-link {
+    background-color: var(--card-bg-color);
+    color: var(--text-muted-color);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.pagination-link:hover {
+    background-color: var(--card-header-bg);
+    color: white;
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.pagination-link.disabled {
+    background-color: transparent;
+    border-color: var(--input-border-color, #2c5364);
+    color: var(--text-muted-color);
+    opacity: 0.6;
+    pointer-events: none; /* Makes the link unclickable */
+}

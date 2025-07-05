@@ -1,9 +1,10 @@
-from django.shortcuts import render
 from functools import reduce
 from operator import and_
 
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render
+
 
 from cardsearch.models import Card
 
@@ -76,11 +77,36 @@ def search(request):
         return render(request, 'cardsearch/landing.html')
 
     # For POST requests, filter and display the results.
+    # Get the sorting parameter from the URL, default to 'name'
+    sort_by = request.GET.get('sort', 'name')
+
+    # Apply filtering from your _filter_cards function
     cards = Card.objects.prefetch_related('monster_types')
     filtered_cards = _filter_cards(request, cards)
 
+    # Apply sorting to the filtered queryset
+    sorted_cards = filtered_cards.order_by(sort_by)
+
+    # Create a Paginator object
+    paginator = Paginator(all_cards, 25) # 25 cards per page
+
+    # Get the current page number from the URL's 'page' parameter
+    page_number = request.GET.get('page')
+
+    # Get the Page object for the requested page number
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "cards_info": filtered_cards,
+        'page_obj': page_obj,
+        "cards": sorted_cards,
+        "current_sort": sort_by,
+        "sort_options": {
+            "name": "Name",
+            "card_type": "Card Type",
+            "monster_level": "Level",
+            "monster_attack": "Attack",
+            "monster_defense": "Defense",
+        },
     }
     
     return render(request, "cardsearch/results.html", context)

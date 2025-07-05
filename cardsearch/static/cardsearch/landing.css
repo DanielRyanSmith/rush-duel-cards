@@ -118,3 +118,9 @@ body, html {
     color: white;
     border-bottom-color: var(--accent-color-end);
 }
+
+@media only screen and (max-width: 768px) {
+    .main-logo {
+        width: 100%;
+    } 
+}

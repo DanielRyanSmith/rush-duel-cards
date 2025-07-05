@@ -17,7 +17,8 @@
 
 <body>
     <div class="hero-section">
-        <h1 class="hero-title">Rush Duel Card Search</h1>
+        <img src="{% static 'cardsearch/images/logo.png' %}" class="main-logo">
+        <h1 class="hero-title">Card Search</h1>
     
         <form class="search-form" method="POST" action="/search">
             {% csrf_token %}

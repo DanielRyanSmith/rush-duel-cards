@@ -1,0 +1,17 @@
+{% if page_obj.has_other_pages %}
+<div class="pagination-controls">
+    <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode|cut:'page' }}"
+       class="pagination-link {% if not page_obj.has_previous %}disabled{% endif %}">
+        &larr; Previous
+    </a>
+
+    <span class="page-info">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+
+    <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode|cut:'page' }}"
+       class="pagination-link {% if not page_obj.has_next %}disabled{% endif %}">
+        Next &rarr;
+    </a>
+</div>
+{% endif %}

@@ -25,14 +25,6 @@ Run the app:
 python manage.py runserver
 ```
 
-### Searching
-Add your search options to the query string. Check `cardsearch/views.py`
-to see what you can add to the query. `q=` searches for case-insensitive substring
-values.
-
-Examples:
-`http://localhost:8000/?attribute=light&mtype=dragon&level=8`
-All Level 8 LIGHT Attribute Dragon type monsters.
-
-`http://localhost:800/?ctype=spell&q=draw+1+card`
-All spells that mention "draw 1 card" in the text.
+Deploy
+# TODO
+gcloud storage rsync ./cardsearch/static/cardsearch gs://ornate-crossbar-465019-c3/static --recursive

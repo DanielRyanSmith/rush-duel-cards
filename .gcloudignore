@@ -1,0 +1,18 @@
+# Default gcloud ignores
+.gcloudignore
+.git
+.gitignore
+
+# Python specific
+__pycache__/
+*.pyc
+*.pyo
+*~
+.DS_Store
+
+# Virtual environment
+# Replace 'rdc-env' with the name of your virtual environment folder
+rdc-env/
+
+# Force the 'staticfiles' directory to be uploaded
+!staticfiles

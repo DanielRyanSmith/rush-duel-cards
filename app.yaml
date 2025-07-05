@@ -9,6 +9,6 @@ entrypoint: gunicorn -b :$PORT rdc.wsgi
 handlers:
 - url: /static
   static_dir: staticfiles/
-
 - url: /.*
   script: auto
+  secure: always

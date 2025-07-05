@@ -10,9 +10,9 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     
-    <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
-    <link rel="stylesheet" href="{% static 'cardsearch/results.css' %}">
-    <link rel="icon" type="image/svg+xml" href="{% static 'cardsearch/images/star.svg' %}" />
+    <link rel="stylesheet" href="https://storage.googleapis.com/ornate-crossbar-465019-c3/static/base.css">
+    <link rel="stylesheet" href="https://storage.googleapis.com/ornate-crossbar-465019-c3/static/results.css">
+    <link rel="icon" type="image/svg+xml" href="https://storage.googleapis.com/ornate-crossbar-465019-c3/static/images/star.svg" />
 </head>
 <body>
 
@@ -86,13 +86,13 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <strong>Attribute:</strong>
-                                        {% with image_path='cardsearch/images/'|add:card.monster_attribute|lower|add:'_attribute.png' %}
+                                        {% with image_path='https://storage.googleapis.com/ornate-crossbar-465019-c3/static/images/'|add:card.monster_attribute|lower|add:'_attribute.png' %}
                                             <img src="{% static image_path %}" class="attribute-img" alt="{{ card.monster_attribute }} attribute">
                                         {% endwith %} {{ card.monster_attribute }} | 
                                         <strong>Level:</strong> {{ card.monster_level }}
                                         <span class="level-stars">
                                             {% for i in "x"|ljust:card.monster_level %}
-                                                <img src="{% static 'cardsearch/images/star.svg' %}" class="level-star" alt="Level star">
+                                                <img src="https://storage.googleapis.com/ornate-crossbar-465019-c3/static/images/star.svg" class="level-star" alt="Level star">
                                             {% endfor %}
                                         </span>
                                     </li>

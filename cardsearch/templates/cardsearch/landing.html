@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Search</title>
+    
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    
+    <link rel="icon" type="image/svg+xml" href="{% static 'cardsearch/images/star.svg' %}" />
+    <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
+    <link rel="stylesheet" href="{% static 'cardsearch/landing.css' %}">
+</head>
+
+<body>
+    <div class="hero-section">
+        <h1 class="hero-title">Rush Duel Card Search</h1>
+    
+        <form class="search-form" method="POST" action="/search">
+            {% csrf_token %}
+            <input class="search-input" type="text" name="name" placeholder="Enter a card name..." required>
+            <button class="search-button" type="submit">Search</button>
+        </form>
+    
+        <a class="advanced-search-link" href="/advanced">Advanced Search &rarr;</a>
+    </div>
+</body>
+
+</html>

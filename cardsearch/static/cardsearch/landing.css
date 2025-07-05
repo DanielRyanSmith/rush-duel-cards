@@ -1,0 +1,120 @@
+/* static/cardsearch/landing.css */
+
+/* --- Import Google Font & Define Color Palette --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Play:wght@700&display=swap');
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: var(--font-primary);
+    color: white;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    background: radial-gradient(circle, var(--bg-color-end), var(--bg-color-mid), var(--bg-color-start));
+    overflow: hidden;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* --- Title Styling --- */
+.hero-title {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, var(--accent-color-start), var(--accent-color-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Search Form --- */
+.search-form {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 50px;
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    animation: slideUp 0.8s 0.2s ease-out backwards;
+}
+
+.search-form:focus-within {
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 15px var(--shadow-color);
+}
+
+.search-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    color: white;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--text-muted-color);
+    opacity: 0.8;
+}
+
+.search-button {
+    border: none;
+    background: linear-gradient(45deg, var(--accent-color-start), var(--accent-color-end));
+    color: white;
+    padding: 0 2.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: var(--font-display);
+    border-radius: 0 50px 50px 0;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.search-button:hover {
+    opacity: 0.9;
+}
+
+/* --- Advanced Search Link --- */
+.advanced-search-link {
+    margin-top: 1.5rem;
+    color: var(--text-muted-color);
+    text-decoration: none;
+    font-size: 1rem;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+    animation: slideUp 0.8s 0.4s ease-out backwards;
+}
+
+.advanced-search-link:hover {
+    color: white;
+    border-bottom-color: var(--accent-color-end);
+}

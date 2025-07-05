@@ -9,6 +9,7 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    <link rel="icon" type="image/svg" href="{% static 'cardsearch/images/star.svg' %}" />
     <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
     <link rel="stylesheet" href="{% static 'cardsearch/advanced_search.css' %}">
 </head>
@@ -18,7 +19,7 @@
         <div class="search-container">
             <h1 class="text-center page-title mb-5">Advanced Search 🔬</h1>
             
-            <form method="POST" action="/search">
+            <form method="POST" action="{% url 'search' %}">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-6">
@@ -29,7 +30,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="card-text" class="form-label">Card Text Contains</label>
-                            <textarea name="card-text" id="card-text" class="form-control" rows="3" placeholder="Search card descriptions..."></textarea>
+                            <textarea name="card-text" id="card-text" class="form-control" rows="3" placeholder="Search all card body text..."></textarea>
                         </div>
                          <div class="mb-3">
                             <label for="requirement" class="form-label">Requirement Text</label>
@@ -56,12 +57,12 @@
                             <div class="col-md-6 mb-3">
                                 <label for="card-status" class="form-label">Card Status</label>
                                 <select name="card-status" id="card-status" class="form-select">
-                                    <option selected value="">-- Any --</option>
-                                    <option value="Unlimited">Unlimited</option>
-                                    <option value="Semi-Limited">Semi-Limited</option>
-                                    <option value="Limited">Limited</option>
-                                    <option value="Banned">Banned</option>
-                                    <option value="Legend">Legend</option>
+                                     <option selected value="">-- Any --</option>
+                                     <option value="Unlimited">Unlimited</option>
+                                     <option value="Semi-Limited">Semi-Limited</option>
+                                     <option value="Limited">Limited</option>
+                                     <option value="Banned">Banned</option>
+                                     <option value="Legend">Legend</option>
                                 </select>
                             </div>
                         </div>
@@ -71,52 +72,65 @@
                              <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="level" class="form-label">Level</label>
-                                    <select name="level" id="level" class="form-select">
-                                        <option selected value="">-- Any --</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                    </select>
+                                    <div class="input-group">
+                                        <select name="level-op" class="form-select flex-grow-0" style="width: 4rem;">
+                                            <option value="exact" selected>=</option>
+                                            <option value="gte">>=</option>
+                                            <option value="lte"><=</option>
+                                            <option value="gt">></option>
+                                            <option value="lt"><</option>
+                                        </select>
+                                        <input type="number" name="level" id="level" class="form-control" min="1" max="12" placeholder="e.g., 4">
+                                    </div>
                                 </div>
                                  <div class="col-md-6 mb-3">
-                                    <label for="attribute" class="form-label">Attribute</label>
-                                    <select name="attribute" id="attribute" class="form-select">
-                                        <option selected value="">-- Any --</option>
-                                        <option value="DARK">DARK</option>
-                                        <option value="EARTH">EARTH</option>
-                                        <option value="FIRE">FIRE</option>
-                                        <option value="LIGHT">LIGHT</option>
-                                        <option value="WATER">WATER</option>
-                                        <option value="WIND">WIND</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
+                                     <label for="attribute" class="form-label">Attribute</label>
+                                     <select name="attribute" id="attribute" class="form-select">
+                                         <option selected value="">-- Any --</option>
+                                         <option value="DARK">DARK</option>
+                                         <option value="EARTH">EARTH</option>
+                                         <option value="FIRE">FIRE</option>
+                                         <option value="LIGHT">LIGHT</option>
+                                         <option value="WATER">WATER</option>
+                                         <option value="WIND">WIND</option>
+                                     </select>
+                                 </div>
+                             </div>
+                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="attack" class="form-label">Attack</label>
-                                    <input type="number" name="attack" id="attack" class="form-control" placeholder="e.g., 2500">
+                                    <div class="input-group">
+                                        <select name="attack-op" class="form-select flex-grow-0" style="width: 4rem;">
+                                            <option value="exact" selected>=</option>
+                                            <option value="gte">>=</option>
+                                            <option value="lte"><=</option>
+                                            <option value="gt">></option>
+                                            <option value="lt"><</option>
+                                        </select>
+                                        <input type="number" name="attack" id="attack" class="form-control" min="0" step="50" placeholder="e.g., 2500">
+                                    </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="defense" class="form-label">Defense</label>
-                                    <input type="number" name="defense" id="defense" class="form-control" placeholder="e.g., 2100">
+                                    <div class="input-group">
+                                        <select name="defense-op" class="form-select flex-grow-0" style="width: 4rem;">
+                                            <option value="exact" selected>=</option>
+                                            <option value="gte">>=</option>
+                                            <option value="lte"><=</option>
+                                            <option value="gt">></option>
+                                            <option value="lt"><</option>
+                                        </select>
+                                        <input type="number" name="defense" id="defense" class="form-control" min="0" step="50" placeholder="e.g., 2100">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="monster-types" class="form-label">Monster Types</label>
-                                <input type="text" name="monster-types" id="monster-types" class="form-control" placeholder="e.g., Spellcaster, Dragon">
-                                <div class="form-text text-muted-color opacity-75">
-                                    Separate multiple types with a comma.
-                                </div>
-                            </div>
+                             </div>
+                             <div class="mb-3">
+                                 <label for="monster-types" class="form-label">Monster Types</label>
+                                 <input type="text" name="monster-types" id="monster-types" class="form-control" placeholder="e.g., Spellcaster, Dragon">
+                                 <div class="form-text text-muted-color opacity-75">
+                                     Separate multiple types with a comma.
+                                 </div>
+                             </div>
                         </div>
                     </div>
                 </div>
@@ -141,10 +155,8 @@
                 }
             }
 
-            // Check on page load
+            // Check on page load and when selection changes
             toggleMonsterOptions();
-
-            // Check when selection changes
             cardTypeSelect.addEventListener('change', toggleMonsterOptions);
         });
     </script>

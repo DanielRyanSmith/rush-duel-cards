@@ -175,14 +175,28 @@
 
 @media (max-width: 768px) {
     .page-btn .btn-text {
-        display: none; /* Hides the text on mobile */
+        display: none;
     }
 
     .page-btn {
-        padding: 0.5rem 1rem; /* Makes the buttons more compact */
+        padding: 0.5rem 1rem;
     }
 
     .page-info {
-        font-size: 0.9rem; /* Slightly smaller text for the count */
+        font-size: 0.9rem;
+    }
+    .results-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .header-search-form {
+        max-width: 100%;
+    }
+
+    .header-advanced-link {
+        text-align: center;
+        padding-top: 0.5rem;
     }
 }

@@ -1,115 +1,152 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Search</title>
+
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
+    <link rel="stylesheet" href="{% static 'cardsearch/advanced_search.css' %}">
 </head>
 
 <body>
-    <div class="text-center">
-        <h1>Advanced Search</h1>
-        <form method="POST" action="/search">
-            {% csrf_token %}
-            <div>
-                <label>Name contains
-                    <input type="text" name="name">
-                </label>
-            </div>
-            <div>
-                <label>Card Type
-                    <select name="card-type" id="card-type">
-                        <option selected value> -- Any -- </option>
-                        <option value="Monster">Monster</option>
-                        <option value="Spell">Spell</option>
-                        <option value="Trap">Trap</option>
-                    </select>
-                </label>
-            </div>
-            <div>
-                <label>Card status
-                    <select name="card-status" id="card-status">
-                        <option selected value> -- Any -- </option>
-                        <option value="Legend">Legend</option>
-                        <option value="Limited">Limited</option>
-                        <option value="Semi-Limited">Semi-Limited</option>
-                        <option value="Unlimited">Unlimited</option>
-                    </select>
-                </label>
-            </div>
-            <div>
-                <label>Card text contains
-                    <textarea name="card-text" id="card-text"></textarea>
-                </label>
-            </div>
-            <div>
-                <label>Requirement text contains
-                    <input name="requirement" id="requirement">
-                </label>
-            </div>
-            <div>
-                <label>Effect text contains
-                    <input name="effect" id="effect">
-                </label>
-            </div>
-            <section>
-                <div>
-                    <h3>Monster options</h3>
-                </div>
-                <div>
-                    <label>Level
-                        <select name="level" id="level">
-                            <option selected value> -- Any -- </option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                    </label>
-                </div>
-                <div>
-                    <label>Attribute
-                        <select name="attribute" id="attribute">
-                            <option selected value> -- Any -- </option>
-                            <option value="DARK">DARK</option>
-                            <option value="EARTH">EARTH</option>
-                            <option value="FIRE">FIRE</option>
-                            <option value="LIGHT">LIGHT</option>
-                            <option value="WATER">WATER</option>
-                            <option value="WIND">WIND</option>
-                        </select>
-                    </label>
-                </div>
-                <div>
-                    <label>Attack
-                        <input type="number" name="attack" />
-                    </label>
-                </div>
-                <div>
-                    <label>Defense</label>
-                    <input type="number" name="defense" />
-                </div>
-                <div>
-                    <label>Monster types (comma-separated)
-                        <input type="text" name="monster-types" />
-                    </label>
-                </div>
-            </section>
-            <button type="submit">Search</button>
-        </form>
-    </div>
-</body>
+    <div class="container my-5">
+        <div class="search-container">
+            <h1 class="text-center page-title mb-5">Advanced Search 🔬</h1>
+            
+            <form method="POST" action="/search">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3 class="form-section-title">General Criteria</h3>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="e.g., Dark Magician">
+                        </div>
+                        <div class="mb-3">
+                            <label for="card-text" class="form-label">Card Text Contains</label>
+                            <textarea name="card-text" id="card-text" class="form-control" rows="3" placeholder="Search card descriptions..."></textarea>
+                        </div>
+                         <div class="mb-3">
+                            <label for="requirement" class="form-label">Requirement Text</label>
+                            <input type="text" name="requirement" id="requirement" class="form-control" placeholder="Search requirement text...">
+                        </div>
+                        <div class="mb-3">
+                            <label for="effect" class="form-label">Effect Text</label>
+                            <input type="text" name="effect" id="effect" class="form-control" placeholder="Search effect text...">
+                        </div>
+                    </div>
 
+                    <div class="col-lg-6">
+                        <h3 class="form-section-title">Specifics</h3>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="card-type" class="form-label">Card Type</label>
+                                <select name="card-type" id="card-type" class="form-select">
+                                    <option selected value="">-- Any --</option>
+                                    <option value="Monster">Monster</option>
+                                    <option value="Spell">Spell</option>
+                                    <option value="Trap">Trap</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="card-status" class="form-label">Card Status</label>
+                                <select name="card-status" id="card-status" class="form-select">
+                                    <option selected value="">-- Any --</option>
+                                    <option value="Unlimited">Unlimited</option>
+                                    <option value="Semi-Limited">Semi-Limited</option>
+                                    <option value="Limited">Limited</option>
+                                    <option value="Banned">Banned</option>
+                                    <option value="Legend">Legend</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div id="monster-options-section" class="hidden mb-3">
+                             <h4 class="form-section-title mt-4" style="font-size: 1.5rem;">Monster Options</h4>
+                             <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="level" class="form-label">Level</label>
+                                    <select name="level" id="level" class="form-select">
+                                        <option selected value="">-- Any --</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </div>
+                                 <div class="col-md-6 mb-3">
+                                    <label for="attribute" class="form-label">Attribute</label>
+                                    <select name="attribute" id="attribute" class="form-select">
+                                        <option selected value="">-- Any --</option>
+                                        <option value="DARK">DARK</option>
+                                        <option value="EARTH">EARTH</option>
+                                        <option value="FIRE">FIRE</option>
+                                        <option value="LIGHT">LIGHT</option>
+                                        <option value="WATER">WATER</option>
+                                        <option value="WIND">WIND</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="attack" class="form-label">Attack</label>
+                                    <input type="number" name="attack" id="attack" class="form-control" placeholder="e.g., 2500">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="defense" class="form-label">Defense</label>
+                                    <input type="number" name="defense" id="defense" class="form-control" placeholder="e.g., 2100">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="monster-types" class="form-label">Monster Types</label>
+                                <input type="text" name="monster-types" id="monster-types" class="form-control" placeholder="e.g., Spellcaster, Dragon">
+                                <div class="form-text text-muted-color opacity-75">
+                                    Separate multiple types with a comma.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-search">Search Cards</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cardTypeSelect = document.getElementById('card-type');
+            const monsterOptions = document.getElementById('monster-options-section');
+
+            function toggleMonsterOptions() {
+                if (cardTypeSelect.value === 'Monster') {
+                    monsterOptions.classList.remove('hidden');
+                } else {
+                    monsterOptions.classList.add('hidden');
+                }
+            }
+
+            // Check on page load
+            toggleMonsterOptions();
+
+            // Check when selection changes
+            cardTypeSelect.addEventListener('change', toggleMonsterOptions);
+        });
+    </script>
+</body>
 </html>

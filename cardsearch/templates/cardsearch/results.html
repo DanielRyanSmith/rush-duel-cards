@@ -1,50 +1,98 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>{% block title %}{% endblock %}</title>
-  {% load bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
-  <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Search Results{% endblock %}</title>
+    
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    
+    <link rel="stylesheet" href="{% static 'cardsearch/base.css' %}">
 </head>
 <body>
-{% if cards_info %}
-    {% for card_info in cards_info %}
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-3">
-            <img style="height: 438px; width: 300px;"src="{{card_info.card.image_url}}" />
+
+<div class="container mt-5 mb-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="page-title">Search Results</h2>
+            <hr style="border-color: var(--border-color);">
         </div>
-        <div class="col-4">
-            <a href="{{card_info.card.url}}" target="_blank"><h3>{{card_info.card.name}}</h3></a>
-            <p>Type: {{card_info.card.card_type}}</p>
-        {% if card_info.card.card_property %}<p>Property: {{card_info.card.card_property}}</p>{% endif %}
-            <p>Status: {{card_info.card.status}}</p>
-            {% if card_info.monster_types %}
-            <p>Monster Types: {{card_info.monster_types}}</p>
-            <p>Attribute: {{card_info.card.monster_attribute}}</p>
-            <p>Level: {{card_info.card.monster_level}}</p>
-            <p>Attack/Defense: {{card_info.card.monster_attack}} / {{card_info.card.monster_defense}}</p>
-            {% endif %}
-            <h4>Text:</h4>
-            {% if card_info.card.effect %}
-            {% if card_info.card.additional_text %}<p>{{card_info.card.additional_text}}</p>{% endif %}
-            <p>[Requirement]</p>
-            <p>{{card_info.card.requirement}}</p>
-            <p>[{{card_info.card.effect_type}}]</p>
-            <p>{{card_info.card.effect}}</p>
-            {% else %}
-            <p>{{card_info.card.text}}</p>
-            {% endif %}
+    </div>
+
+    {% if cards_info %}
+        {% for card in cards_info %}
+        <div class="result-card mb-4">
+            <div class="row g-0">
+                <div class="col-lg-3 card-img-container">
+                    <a href="{{card.url}}" target="_blank">
+                        <img src="{{ card.image_url }}" class="card-img-top" alt="{{ card.name }}">
+                    </a>
+                </div>
+                <div class="col-lg-9">
+                    <div class="card-content">
+                        <h3 class="card-name">
+                            <a href="{{ card.url }}" target="_blank">{{ card.name }}</a>
+                        </h3>
+                        
+                        <div class="mb-3">
+                            <span class="custom-badge badge-type me-2">{{ card.card_type }}</span>
+                            {% if card.card_property %}
+                                <span class="custom-badge badge-property me-2">{{ card.card_property }}</span>
+                            {% endif %}
+                            <span class="custom-badge badge-status-{{ card.status }}">Status: {{ card.status }}</span>
+                        </div>
+
+                        {% if "Monster" in card.card_type %}
+                            <div class="stats-block">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <strong>Attribute:</strong>
+                                        {% with image_path='cardsearch/images/'|add:card.monster_attribute|lower|add:'_attribute.png' %}
+                                            <img src="{% static image_path %}" class="attribute-img" alt="{{ card.monster_attribute }} attribute">
+                                        {% endwith %} {{ card.monster_attribute }} | 
+                                        <strong>Level:</strong> {{ card.monster_level }}
+                                        <span class="level-stars">
+                                            {% for i in "x"|ljust:card.monster_level %}
+                                                <img src="{% static 'cardsearch/images/star.svg' %}" class="level-star" alt="Level star">
+                                            {% endfor %}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Types:</strong> {{ card.monster_types.all|join:" / " }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>ATK / DEF:</strong> {{ card.monster_attack }} / {{ card.monster_defense }}
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        <div class="card-text-box">
+                            <h5 class="mb-2">Card Text</h5>
+                            {% if card.effect %}
+                                {% if card.additional_text %}<p class="fst-italic">{{ card.additional_text }}</p>{% endif %}
+                                <p><strong>[Requirement]</strong><br>{{ card.requirement|linebreaksbr }}</p>
+                                <p><strong>[{{ card.effect_type }}]</strong><br>{{ card.effect|linebreaksbr }}</p>
+                            {% else %}
+                                <p>{{ card.text|linebreaksbr }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-2"></div>
-    </div>
-    {% endfor %}
-{% else %}
-    <div class="row">
-        <h1>No results found</h1>
-    </div>
-{% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="no-results">
+            <h3>No Results Found</h3>
+            <p class="text-muted">Please try adjusting your search filters.</p>
+            <a href="/search" class="btn btn-new-search mt-3">New Search</a>
+        </div>
+    {% endif %}
+</div>
+
 </body>
 </html>

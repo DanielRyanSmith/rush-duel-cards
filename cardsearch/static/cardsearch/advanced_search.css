@@ -1,0 +1,118 @@
+/* static/cardsearch/advanced_search.css */
+
+/* --- Import Google Font & Define Color Palette --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Play:wght@700&display=swap');
+
+:root {
+    --bg-color-start: #0f2027;
+    --bg-color-mid: #203a43;
+    --bg-color-end: #2c5364;
+    --card-bg-color: #16213e;
+    --accent-color-start: #ff8c00;
+    --accent-color-end: #e94560;
+    --border-color: #e94560;
+    --shadow-color: rgba(233, 69, 96, 0.3);
+    --font-primary: 'Roboto', sans-serif;
+    --font-display: 'Play', sans-serif;
+    --input-bg-color: rgba(0, 0, 0, 0.3);
+    --input-border-color: #2c5364;
+    --input-focus-border-color: var(--border-color);
+    --text-color: #e94560;
+    --text-muted-color: #a7a9be;
+}
+
+/* --- Main Search Container --- */
+.search-container {
+    background-color: var(--card-bg-color);
+    padding: 2.5rem;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+.page-title, .form-section-title {
+    font-family: var(--font-display);
+    background: linear-gradient(45deg, var(--accent-color-start), var(--accent-color-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+}
+
+.form-section-title {
+    font-size: 1.75rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Form Element Styling --- */
+.form-label {
+    color: #fff;
+    font-weight: 500;
+}
+
+.form-control, .form-select {
+    background-color: var(--input-bg-color);
+    color: var(--text-muted-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted-color);
+    opacity: 0.6;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--input-bg-color);
+    color: #fff;
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+    outline: none;
+}
+
+.form-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23a7a9be' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 12px;
+}
+
+/* --- Search Button --- */
+.btn-search {
+    background: linear-gradient(45deg, var(--accent-color-start), var(--accent-color-end));
+    color: white;
+    border: none;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: var(--font-display);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.btn-search:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+/* --- Monster Options Section --- */
+#monster-options-section {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(0);
+}
+
+#monster-options-section.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 0 !important;
+}

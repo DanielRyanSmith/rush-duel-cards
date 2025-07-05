@@ -1,10 +1,182 @@
+/* --- Import a Google Font --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Play:wght@700&display=swap');
+
+/* --- Define a Color Palette and Base Styles --- */
+:root {
+    --bg-color-start: #0f2027;
+    --bg-color-mid: #203a43;
+    --bg-color-end: #2c5364;
+    --card-bg-color: #16213e;
+    --card-header-bg: #0f3460;
+    --accent-color-start: #ff8c00;
+    --accent-color-end: #e94560;
+    --text-muted-color: #a7a9be;
+    --border-color: #e94560;
+    --shadow-color: rgba(233, 69, 96, 0.3);
+    --font-primary: 'Roboto', sans-serif;
+    --font-display: 'Play', sans-serif;
+}
+
 body {
-    background: linear-gradient(to bottom, #1d1c25, #431e3f);
-    min-height: 100vh;
-    color: white;
+    background: radial-gradient(circle, var(--bg-color-end), var(--bg-color-mid), var(--bg-color-start));
+    color: var(--text-muted-color); /* Adjusted default text color for better contrast */
+    font-family: var(--font-primary);
 }
 
-body p {
-    color: white;
+/* --- Main Title & Card Name Typography --- */
+.page-title, .card-name a {
+    font-family: var(--font-display);
+    background: linear-gradient(45deg, var(--accent-color-start), var(--accent-color-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
 }
 
+.card-name a {
+    font-size: 2rem;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    -webkit-text-fill-color: transparent; /* Ensure transition works */
+}
+
+.card-name a:hover {
+    text-shadow: 0 0 10px var(--shadow-color);
+}
+
+/* --- Result Card Styling --- */
+.result-card {
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.card-img-container {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-img-top {
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 0 15px var(--shadow-color);
+}
+
+.card-img-top:hover {
+    transform: translateY(-10px) scale(1.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    cursor: pointer;
+}
+
+.card-content {
+    padding: 1.5rem;
+    /* ✨ Added left padding on medium screens and up to space from image */
+    padding-left: 2rem;
+}
+
+/* --- Custom Badges --- */
+.custom-badge {
+    font-size: 0.9rem;
+    padding: 0.5em 1em;
+    border-radius: 20px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.badge-type { background-color: #0f3460; }
+.badge-property { background-color: #533483; }
+.badge-status-Unlimited {background-color: #00c9a7;}
+.badge-status-Semi-Limited {background-color: #ffc400; }
+.badge-status-Limited {background-color: #fd7e14; }
+.badge-status-Banned {background-color: #e84a5f; }
+.badge-status-Legend { background-color: #663399; }
+
+/* --- Monster Stats Section --- */
+.stats-block {
+    background-color: rgba(15, 52, 96, 0.5);
+    border-left: 4px solid var(--accent-color-end);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.stats-block .list-group-item {
+    background-color: transparent;
+    color: var(--text-muted-color);
+    border: none;
+    padding-left: 0;
+}
+
+.stats-block strong {
+    color: #fff;
+}
+
+/* --- Card Text Box --- */
+.card-text-box {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    color: var(--text-muted-color);
+    margin-top: 1rem;
+}
+
+.card-text-box h5 {
+    font-family: var(--font-display);
+    color: #fff;
+}
+
+.card-text-box strong {
+    color: var(--accent-color-end);
+}
+
+.card-text-box .fst-italic {
+    color: #a7a9be;
+    opacity: 0.8;
+}
+
+/* --- No Results Found --- */
+.no-results {
+    text-align: center;
+    padding: 4rem;
+    background-color: var(--card-bg-color);
+    border-radius: 15px;
+    border: 1px dashed var(--border-color);
+}
+
+.no-results h3 {
+    font-family: var(--font-display);
+}
+
+.btn-new-search {
+    background-color: var(--accent-color-end);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-new-search:hover {
+    background-color: #ff8c9a;
+}
+
+.attribute-img {
+    height: 28px;
+    width: 28px;
+    margin: -3px 0;
+}
+
+.level-stars {
+    margin-left: 4px;
+}
+
+.level-star {
+    height: 18px;
+    width: 18px;
+    margin: -4px -2px 0px;
+}

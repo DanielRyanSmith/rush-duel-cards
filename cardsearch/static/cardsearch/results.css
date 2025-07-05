@@ -172,3 +172,17 @@
     opacity: 0.6;
     pointer-events: none;
 }
+
+@media (max-width: 768px) {
+    .page-btn .btn-text {
+        display: none; /* Hides the text on mobile */
+    }
+
+    .page-btn {
+        padding: 0.5rem 1rem; /* Makes the buttons more compact */
+    }
+
+    .page-info {
+        font-size: 0.9rem; /* Slightly smaller text for the count */
+    }
+}

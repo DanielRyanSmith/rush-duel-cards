@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<div class="container mt-4 mb-5 " id="results-list-container">
+<div class="container mt-4 mb-5">
     
     <header class="results-header mb-5">
         <form class="header-search-form" method="POST" action="/search">
@@ -31,7 +31,6 @@
         <div class="col">
             <h2 class="page-title">Search Results</h2>
         </div>
-        
         <div class="col-auto">
             <div class="dropdown sorting-controls">
                 <button class="btn btn-sort dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,10 +48,11 @@
                 </ul>
             </div>
         </div>
-        <div class="col-12"><hr style="border-color: var(--border-color);"></div>
-        <div id="pagination-top" class="pagination-controls"></div>
     </div>
+    <div class="col-12"><hr style="border-color: var(--border-color);"></div>
+    <div id="pagination-top" class="pagination-controls"></div>
 
+    <div id="results-list-container">
     {% if cards %}
         {% for card in cards|dictsort:current_sort %}
         <div class="result-card mb-4" 
@@ -128,6 +128,7 @@
             <a href="/advanced" class="btn btn-new-search mt-3">New Search</a>
         </div>
     {% endif %}
+    </div>
     <div id="pagination-bottom" class="pagination-controls"></div>
 </div>
 
@@ -138,56 +139,78 @@ document.addEventListener('DOMContentLoaded', function() {
     const sortLinks = document.querySelectorAll('.sort-link');
     const paginationTop = document.getElementById('pagination-top');
     const paginationBottom = document.getElementById('pagination-bottom');
+    const resultsCountSpan = document.getElementById('results-count');
 
     let currentPage = 1;
     const rowsPerPage = 25;
+    const totalCards = cardElements.length;
+    const pageCount = Math.ceil(totalCards / rowsPerPage);
 
-    // --- PAGINATION LOGIC ---
+    // --- PAGINATION & UI UPDATE LOGIC ---
     function displayPage(page) {
         currentPage = page;
         const start = rowsPerPage * (page - 1);
         const end = start + rowsPerPage;
 
-        // Hide all cards, then show only the ones for the current page
         cardElements.forEach((card, index) => {
             card.style.display = (index >= start && index < end) ? '' : 'none';
         });
 
         updatePaginationControls();
-    }
 
-    function setupPaginationControls() {
-        const pageCount = Math.ceil(cardElements.length / rowsPerPage);
-        // Clear previous controls
-        paginationTop.innerHTML = '';
-        paginationBottom.innerHTML = '';
-        
-        if (pageCount <= 1) return; // Don't show controls if there's only one page
-
-        for (let i = 1; i <= pageCount; i++) {
-            const btn = createPageButton(i);
-            const btn2 = createPageButton(i); // Create a second button for the bottom
-            paginationTop.appendChild(btn);
-            paginationBottom.appendChild(btn2);
+        const rect = resultsContainer.getBoundingClientRect();
+        if (rect.top < 0) {
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
-    
-    function createPageButton(page) {
-        const button = document.createElement('button');
-        button.innerText = page;
-        button.classList.add('page-btn');
-        if (page === currentPage) {
-            button.classList.add('active');
-        }
-        button.addEventListener('click', function() {
-            displayPage(page);
-        });
-        return button;
+
+    function createControls() {
+        // Only create controls if they are needed
+        if (pageCount <= 1) return;
+
+        const controlsHtml = `
+            <button class="page-btn" data-action="first">&laquo;&nbsp;<span class="btn-text">First</span></button>
+            <button class="page-btn" data-action="prev">&larr;&nbsp;<span class="btn-text">Previous</span></button>
+            <span class="page-info" data-role="info"></span>
+            <button class="page-btn" data-action="next"><span class="btn-text">Next</span>&nbsp;&rarr;</button>
+            <button class="page-btn" data-action="last"><span class="btn-text">Last</span>&nbsp;&raquo;</button>
+        `;
+        paginationTop.innerHTML = controlsHtml;
+        paginationBottom.innerHTML = controlsHtml;
     }
-    
+
     function updatePaginationControls() {
-        // Just recreate them to easily handle active state
-        setupPaginationControls();
+        if (pageCount <= 1) return;
+
+        const startRow = (currentPage - 1) * rowsPerPage + 1;
+        const endRow = Math.min(currentPage * rowsPerPage, totalCards);
+        const infoText = `${startRow} – ${endRow} of ${totalCards} cards`;
+
+        document.querySelectorAll('[data-role="info"]').forEach(el => el.innerText = infoText);
+        
+        const allButtons = document.querySelectorAll('.page-btn');
+        allButtons.forEach(button => {
+            const action = button.dataset.action;
+            let disabled = false;
+            if (action === 'first' || action === 'prev') {
+                disabled = (currentPage === 1);
+            } else if (action === 'next' || action === 'last') {
+                disabled = (currentPage === pageCount);
+            }
+            button.classList.toggle('disabled', disabled);
+        });
+    }
+    
+    function addPaginationListeners() {
+        document.querySelectorAll('.page-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const action = button.dataset.action;
+                if (action === 'first') displayPage(1);
+                if (action === 'prev') displayPage(currentPage - 1);
+                if (action === 'next') displayPage(currentPage + 1);
+                if (action === 'last') displayPage(pageCount);
+            });
+        });
     }
 
     // --- SORTING LOGIC ---
@@ -205,21 +228,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 return sortDir === 'asc' ? comparison : -comparison;
             });
 
-            // Re-append ALL sorted cards to the container (maintains new order)
-            cardElements.forEach(card => resultsContainer.appendChild(card));
+            resultsContainer.innerHTML = ''; // Clear container
+            cardElements.forEach(card => resultsContainer.appendChild(card)); // Re-append all
             
-            // After sorting, always go back to page 1
-            displayPage(1);
-
-            // Update UI
+            displayPage(1); // Go to first page after sorting
+            
             sortLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
     });
 
     // --- INITIAL SETUP ---
-    if (cardElements.length > 0) {
-        setupPaginationControls();
+    if (totalCards > 0) {
+        createControls();
+        addPaginationListeners();
         displayPage(currentPage);
     }
 });

@@ -40,8 +40,8 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://ornate-crossbar-465019-c3.uc.r.appspot.com', 
-    'rushduel.org',
-    'rushduel.info'
+    'https://rushduel.org',
+    'https://rushduel.info'
 ]
 
 # Application definition

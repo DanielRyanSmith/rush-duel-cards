@@ -28,7 +28,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 SECRET_KEY = "django-insecure-_i(=%r)j1du_zz1$@owf=g7#gh8pa@)o$w-5r_%+p-v4kn%%ai"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'ornate-crossbar-465019-c3.uc.r.appspot.com',
@@ -41,7 +41,7 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     'https://ornate-crossbar-465019-c3.uc.r.appspot.com', 
     'https://rushduel.org',
-    'https://rushduel.info'
+    'https://rushduel.info',
 ]
 
 # Application definition

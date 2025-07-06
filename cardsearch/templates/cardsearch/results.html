@@ -86,8 +86,7 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <strong>Attribute:</strong>
-                                            <img src="https://storage.googleapis.com/ornate-crossbar-465019-c3/static/images/{{card.monster_attribute|lower}}_attribute.png" class="attribute-img" alt="{{ card.monster_attribute }} attribute">
-                                        {% endwith %} {{ card.monster_attribute }} | 
+                                            <img src="https://storage.googleapis.com/ornate-crossbar-465019-c3/static/images/{{card.monster_attribute|lower}}_attribute.png" class="attribute-img" alt="{{ card.monster_attribute }} attribute"> {{ card.monster_attribute }} | 
                                         <strong>Level:</strong> {{ card.monster_level }}
                                         <span class="level-stars">
                                             {% for i in "x"|ljust:card.monster_level %}

@@ -31,10 +31,18 @@ SECRET_KEY = "django-insecure-_i(=%r)j1du_zz1$@owf=g7#gh8pa@)o$w-5r_%+p-v4kn%%ai
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'ornate-crossbar-465019-c3.uc.r.appspot.com', 'localhost', '127.0.0.1',
+    'ornate-crossbar-465019-c3.uc.r.appspot.com',
+    'localhost',
+    '127.0.0.1',
+    'rushduel.org',
+    'rushduel.info',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://ornate-crossbar-465019-c3.uc.r.appspot.com']
+CSRF_TRUSTED_ORIGINS = [
+    'https://ornate-crossbar-465019-c3.uc.r.appspot.com', 
+    'rushduel.org',
+    'rushduel.info'
+]
 
 # Application definition
 
